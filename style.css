@@ -1,18 +1,18 @@
-canvas {
-    margin-right: 10%;
-}
+/*canvas {*/
+    /*margin-right: 10%;*/
+/*}*/
 
-#wrapper {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/*#wrapper {*/
+    /*height: 100vh;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+/*}*/
 
-button {
-    align-self: center;
-}
-#sidebar{
-    display: flex;
-    flex-direction: column;
-}
+/*button {*/
+    /*align-self: center;*/
+/*}*/
+/*#sidebar{*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+/*}*/
