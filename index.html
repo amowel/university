@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-axis.v1.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <canvas id="mycanvas"></canvas>
+    <div id="sidebar">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="A" placeholder="6 1">
+            <label class="mdl-textfield__label" for="">A</label>
+
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="B" placeholder="8 3">
+            <label class="mdl-textfield__label" for="">B</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="C" placeholder="10 3">
+            <label class="mdl-textfield__label" for="">C</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="D" placeholder="8 1">
+            <label class="mdl-textfield__label" for="">D</label>
+        </div>
+        <input type="color" id="color">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="drawPolygon()">
+            Button
+        </button>
+    </div>
+</div>
+</body>
+<script>
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+    const drawPolygon = () => {
+        let a = document.querySelector('#A');
+        let b = document.querySelector('#B');
+        let c = document.querySelector('#C');
+        let d = document.querySelector('#D');
+        const color = document.querySelector('#color').value
+        a = {
+            x: parseInt(a.value.split(' ')[0]) * 20,
+            y: parseInt(a.value.split(' ')[1] * -20)
+        };
+        b = {
+            x: parseInt(b.value.split(' ')[0]) * 20,
+            y: parseInt(b.value.split(' ')[1] * -20)
+        };
+        c = {
+            x: parseInt(c.value.split(' ')[0]) * 20,
+            y: parseInt(c.value.split(' ')[1] * -20)
+        };
+        d = {
+            x: parseInt(d.value.split(' ')[0]) * 20,
+            y: parseInt(d.value.split(' ')[1] * -20)
+        };
+//        if(a.x < 0 || a.y > 0 || b.x < 0 || b.y > 0 ||
+//            c.x < 0 || c.y > 0 || d.x < 0 || d.y > 0){
+//            console.log('invalid');
+//            return false
+//        }
+        console.log(color);
+        ctx.fillStyle = getRandomColor();
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.lineTo(c.x, c.y);
+        ctx.lineTo(d.x, d.y);
+        ctx.lineTo(a.x, a.y);
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(c.x, c.y);
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(c.x, c.y);
+        ctx.lineTo(5 * 20,2 * -20);
+        ctx.closePath()
+        ctx.fill();
+        ctx.stroke();
+   //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    var grid_size = 20;
+    var x_axis_distance_grid_lines = 11;
+    var y_axis_distance_grid_lines = 11;
+    var x_axis_starting_point = { number: 1, suffix: '' };
+    var y_axis_starting_point = { number: 1, suffix: '' };
+
+    var canvas = document.querySelector("#mycanvas");
+    var ctx = canvas.getContext("2d");
+    canvas.width = 440;
+    canvas.height = 440;
+    // canvas width
+    var canvas_width = canvas.width;
+
+    // canvas height
+    var canvas_height = canvas.height;
+    console.log(canvas_width)
+    console.log(canvas_height)
+    // no of vertical grid lines
+    var num_lines_x = Math.floor(canvas_height/grid_size);
+
+    // no of horizontal grid lines
+    var num_lines_y = Math.floor(canvas_width/grid_size);
+    for(var i=0; i<=num_lines_x; i++) {
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+
+        // If line represents X-axis draw in different color
+        if(i == x_axis_distance_grid_lines)
+            ctx.strokeStyle = "#000000";
+        else
+            ctx.strokeStyle = "#e9e9e9";
+
+        if(i == num_lines_x) {
+            ctx.moveTo(0, grid_size*i);
+            ctx.lineTo(canvas_width, grid_size*i);
+        }
+        else {
+            ctx.moveTo(0, grid_size*i+0.5);
+            ctx.lineTo(canvas_width, grid_size*i+0.5);
+        }
+        ctx.stroke();
+    }
+    for(i=0; i<=num_lines_y; i++) {
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+
+        // If line represents Y-axis draw in different color
+        if(i == y_axis_distance_grid_lines)
+            ctx.strokeStyle = "#000000";
+        else
+            ctx.strokeStyle = "#e9e9e9";
+
+        if(i == num_lines_y) {
+            ctx.moveTo(grid_size*i, 0);
+            ctx.lineTo(grid_size*i, canvas_height);
+        }
+        else {
+            ctx.moveTo(grid_size*i+0.5, 0);
+            ctx.lineTo(grid_size*i+0.5, canvas_height);
+        }
+        ctx.stroke();
+    }
+    ctx.translate(y_axis_distance_grid_lines*grid_size, x_axis_distance_grid_lines*grid_size);
+
+    for(i=1; i<(num_lines_y - y_axis_distance_grid_lines); i++) {
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#000000";
+
+        // Draw a tick mark 6px long (-3 to 3)
+        ctx.moveTo(grid_size*i+0.5, -3);
+        ctx.lineTo(grid_size*i+0.5, 3);
+        ctx.stroke();
+
+        // Text value at that point
+        ctx.font = '9px Arial';
+        ctx.textAlign = 'start';
+        ctx.fillText(x_axis_starting_point.number*i + x_axis_starting_point.suffix, grid_size*i-2, 15);
+    }
+
+    // Ticks marks along the negative X-axis
+    for(i=1; i<y_axis_distance_grid_lines; i++) {
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#000000";
+
+        // Draw a tick mark 6px long (-3 to 3)
+        ctx.moveTo(-grid_size*i+0.5, -3);
+        ctx.lineTo(-grid_size*i+0.5, 3);
+        ctx.stroke();
+
+        // Text value at that point
+        ctx.font = '9px Arial';
+        ctx.textAlign = 'end';
+        ctx.fillText(-x_axis_starting_point.number*i + x_axis_starting_point.suffix, -grid_size*i+3, 15);
+    }
+    for(i=1; i<(num_lines_x - x_axis_distance_grid_lines); i++) {
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#000000";
+
+        // Draw a tick mark 6px long (-3 to 3)
+        ctx.moveTo(-3, grid_size*i+0.5);
+        ctx.lineTo(3, grid_size*i+0.5);
+        ctx.stroke();
+
+        // Text value at that point
+        ctx.font = '9px Arial';
+        ctx.textAlign = 'start';
+        ctx.fillText(-y_axis_starting_point.number*i + y_axis_starting_point.suffix, 8, grid_size*i+3);
+    }
+
+    // Ticks marks along the negative Y-axis
+    // Negative Y-axis of graph is positive Y-axis of the canvas
+    for(i=1; i<x_axis_distance_grid_lines; i++) {
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#000000";
+
+        // Draw a tick mark 6px long (-3 to 3)
+        ctx.moveTo(-3, -grid_size*i+0.5);
+        ctx.lineTo(3, -grid_size*i+0.5);
+        ctx.stroke();
+
+        // Text value at that point
+        ctx.font = '9px Arial';
+        ctx.textAlign = 'start';
+        ctx.fillText(y_axis_starting_point.number*i + y_axis_starting_point.suffix, 8, -grid_size*i+3);
+    }
+
+</script>
+</html>
