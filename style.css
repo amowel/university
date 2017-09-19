@@ -1,18 +1,28 @@
-/*canvas {*/
-    /*margin-right: 10%;*/
-/*}*/
+.container {
+    margin-top: 10%;
+    width: 80%;
+}
+label {
+    margin-bottom: 0px;
+}
 
-/*#wrapper {*/
-    /*height: 100vh;*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-/*}*/
+button {
+    width: 100%;
+}
 
-/*button {*/
-    /*align-self: center;*/
-/*}*/
-/*#sidebar{*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-/*}*/
+.button-wrapper {
+    width: 100%;
+    position: absolute;
+    bottom:15px;
+}
+
+.input-wrapper {
+    position: relative;
+    margin-right: 15px;
+    margin-left: -15px;
+}
+
+.mdl-list__item-primary-content {
+
+    flex-grow: 0 !important;
+}
